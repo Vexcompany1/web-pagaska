@@ -1,0 +1,2644 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="UXzoMrPw2NZcGNvVr5RdiTvEyePvm6jjWByGjY3Xtvs" />
+    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.4.2/uicons-brands/css/uicons-brands.css">
+    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.4.2/uicons-regular-solid/css/uicons-regular-solid.css">
+    <title>PAGASKA - Paskibra Gala Taksaka</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #c41e3a;
+            --secondary: #1a1a2e;
+            --gold: #ffd700;
+            --white: #ffffff;
+            --light-gray: #f5f5f5;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+        }
+        
+        i[class^="fi"] {
+            font-family: inherit;
+        }
+
+        /* Loading Screen */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        #loading-screen.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .logo-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .logo-placeholder {
+            width: 100%;
+            height: 100%;
+            background: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            font-weight: bold;
+            color: var(--primary);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+        }
+        
+        .logo-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 50%;
+        }
+
+        .loading-text {
+            color: var(--white);
+            font-size: 24px;
+            margin-top: 30px;
+            font-weight: 600;
+            letter-spacing: 2px;
+        }
+
+        .loading-bar {
+            width: 250px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            margin-top: 20px;
+            overflow: hidden;
+        }
+
+        .loading-bar-fill {
+            height: 100%;
+            background: var(--gold);
+            animation: loading 5s ease-in;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes loading {
+            0% { width: 0%; }
+            5% { width: 5%; }
+            10% { width: 10%; }
+            40% { width: 40%; }
+            70% { width: 70%; }
+            90% { width: 90%; }
+            100% { width: 100%; }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 5%;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-logo {
+            color: var(--white);
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-menu a:hover {
+            color: var(--gold);
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--white);
+            transition: 0.3s;
+        }
+        
+/* teks bergerak jir */
+.marquee-container {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(90deg, var(--secondary) 0%, var(--primary) 100%);
+    color: var(--white);
+    padding: 8px 0;
+    z-index: 999;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.marquee-content {
+    display: inline-flex;
+    white-space: nowrap;
+    position: relative;
+}
+
+.marquee-item {
+    display: inline-block;
+    margin: 0 15px;
+    font-weight: 500;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.marquee-separator {
+    color: var(--gold);
+    margin: 0 5px;
+    flex-shrink: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .marquee-container {
+        top: 60px;
+        padding: 6px 0;
+    }
+    
+    .marquee-item {
+        font-size: 12px;
+        margin: 0 10px;
+    }
+}
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,0.05)" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') bottom center no-repeat;
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            padding: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--gold);
+            color: var(--secondary);
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        /* Sections */
+        section {
+            padding: 80px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        section h2 {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--primary);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            margin-top: 3rem;
+        }
+
+        .about-text p {
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 1rem;
+        }
+
+        .about-img {
+            width: 100%;
+            height: 400px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .about-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--primary);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) {
+            flex-direction: row-reverse;
+        }
+
+        .timeline-content {
+            width: 45%;
+            background: var(--light-gray);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .timeline-content h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: var(--gold);
+            border: 4px solid var(--white);
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px var(--primary);
+        }
+
+        /* Lightbox Styles */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .lightbox-content {
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            max-width: 350px;
+            text-align: center;
+            position: relative;
+        }
+
+        .lightbox-content img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .lightbox-info p {
+            margin: 6px 0;
+            color: #333;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Struktur Organisasi */
+        .org-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .org-tab {
+            padding: 12px 30px;
+            background: var(--light-gray);
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .org-tab.active {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+.org-tab:hover {
+    background: var(--primary);
+    color: var(--white);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(196, 30, 58, 0.2);
+}
+
+@media (max-width: 768px) {
+    .org-tabs {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.8rem;
+    }
+    
+    .org-tab {
+        width: 80%; /* Lebar lebih besar di mobile */
+        max-width: 300px;
+        padding: 14px 20px; /* Padding lebih besar di mobile */
+    }
+}
+
+@media (max-width: 480px) {
+    .org-tab {
+        width: 90%;
+        padding: 12px 15px;
+    }
+}
+
+        .org-content {
+            display: none;
+        }
+
+        .org-content.active {
+            display: block;
+        }
+
+        .org-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .org-card {
+            background: var(--light-gray);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .org-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .org-card h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .org-card p {
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .org-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .more-structure {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .toggle-btn {
+            display: block;
+            margin: 20px auto 0;
+            padding: 10px 25px;
+            background: var(--secondary);
+            color: var(--white);
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .toggle-btn:hover {
+            background: var(--gold);
+            color: var(--secondary);
+        }
+
+        /* Prestasi Styles */
+        .achievements-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .achievement-article {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 40px;
+            transition: transform 0.3s ease;
+        }
+
+        .achievement-article:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .achievement-header {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+            color: white;
+            padding: 25px 30px;
+            position: relative;
+        }
+        
+        .achievement-badge {
+            position: absolute;
+            top: -15px;
+            right: 18px;
+            background: var(--gold);
+            color: var(--secondary);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .achievement-title {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .achievement-meta {
+            display: flex;
+            gap: 20px;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .achievement-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .achievement-body {
+            padding: 30px;
+        }
+
+        .achievement-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-caption {
+            text-align: center;
+            font-style: italic;
+            color: #666;
+            margin-top: -20px;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+
+        .achievement-description {
+            line-height: 1.8;
+            color: #444;
+            margin-bottom: 20px;
+        }
+
+        .achievement-details {
+            background: var(--light-gray);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 25px 0;
+            border-left: 4px solid var(--primary);
+        }
+
+        .detail-item {
+            display: flex;
+            margin-bottom: 10px;
+            align-items: flex-start;
+        }
+
+        .detail-label {
+            font-weight: bold;
+            min-width: 180px;
+            color: var(--secondary);
+        }
+
+        .detail-value {
+            flex: 1;
+            color: #555;
+        }
+
+        .achievement-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .tags {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: #e9ecef;
+            color: #495057;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .read-more {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: color 0.3s;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 16px;
+            padding: 0;
+        }
+
+        .read-more:hover {
+            color: var(--secondary);
+        }
+
+        /* Video container */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+        }
+
+        /* Gallery */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .gallery-item {
+            height: 180px;
+            border-radius: 6px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s;
+            position: relative;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.03);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Gallery Lightbox */
+        .gallery-lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 99999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .gallery-lightbox.active {
+            display: flex;
+        }
+
+        .gallery-lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .gallery-lightbox-img {
+            width: 100%;
+            height: auto;
+            max-height: 80vh;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: -40px;
+            right: -10px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 100;
+        }
+
+        .lightbox-close:hover {
+            background: var(--secondary);
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .lightbox-nav:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .lightbox-prev {
+            left: -70px;
+        }
+
+        .lightbox-next {
+            right: -70px;
+        }
+
+        .lightbox-counter {
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 16px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 5px 15px;
+            border-radius: 20px;
+        }
+
+        /* Detail Lightbox */
+        .detail-lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .detail-lightbox.active {
+            display: flex;
+        }
+
+        .detail-lightbox-content {
+            background: white;
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 12px;
+            padding: 30px;
+            position: relative;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .detail-lightbox-header {
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .detail-lightbox-header h3 {
+            color: var(--secondary);
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .detail-lightbox-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .detail-lightbox-text {
+            line-height: 1.8;
+            color: #444;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .detail-lightbox-gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .detail-lightbox-gallery img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .detail-lightbox-gallery img:hover {
+            transform: scale(1.05);
+        }
+
+        .detail-lightbox-footer {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 25px;
+        }
+
+        .detail-close {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .detail-close:hover {
+            background: var(--secondary);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--secondary);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem 5%;
+        }
+
+        footer .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        footer a {
+            color: var(--white);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        footer a:hover {
+            color: var(--gold);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+
+            .nav-menu {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--secondary);
+                flex-direction: column;
+                padding: 1rem;
+                display: none;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                flex-direction: column !important;
+                padding-left: 50px;
+            }
+
+            .timeline-content {
+                width: 100%;
+            }
+
+            .timeline-dot {
+                left: 20px;
+            }
+
+            .org-tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .achievement-title {
+                font-size: 22px;
+            }
+            
+            .achievement-meta {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .achievement-image {
+                height: 250px;
+            }
+            
+            .detail-item {
+                flex-direction: column;
+            }
+            
+            .detail-label {
+                min-width: auto;
+                margin-bottom: 5px;
+            }
+            
+            .achievement-footer {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .lightbox-nav {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+            
+            .lightbox-prev {
+                left: 10px;
+            }
+            
+            .lightbox-next {
+                right: 10px;
+            }
+            
+            .lightbox-close {
+                top: 10px;
+                right: 10px;
+            }
+            
+            .detail-lightbox-gallery {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .detail-lightbox-gallery {
+                grid-template-columns: 1fr;
+            }
+            
+            .detail-lightbox-content {
+                padding: 20px;
+            }
+            
+            .detail-lightbox-image {
+                height: 200px;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .org-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="logo-container">
+            <div class="logo-placeholder">
+                <img src="/images/logo.png" alt="PAGASKA">
+            </div>
+        </div>
+        <div class="loading-text">PASKIBRA GALA TAKSAKA</div>
+        <div class="loading-bar">
+            <div class="loading-bar-fill"></div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <a href="#" class="nav-logo">🐉 PAGASKA</a>
+            <div class="menu-toggle" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home">Beranda</a></li>
+                <li><a href="#about">Tentang</a></li>
+                <li><a href="#history">Sejarah</a></li>
+                <li><a href="#structure">Struktur</a></li>
+                <li><a href="#achievements">Prestasi</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- Teks Berjalan (Marquee) -->
+<div class="marquee-container" id="marquee">
+    <div class="marquee-content">
+        <span class="marquee-item">🏆 Juara Harapan 2 Parade Senja 2024</span>
+        <span class="marquee-separator">•</span>
+        <span class="marquee-item">🇮🇩 3 Anggota Terpilih Pasukan Pengibar Bendera 2023</span>
+        <span class="marquee-separator">•</span>
+        <span class="marquee-item">🎖️ 10 Anggota Bertugas di Penurunan Bendera Kecamatan Dalung 2024</span>
+        <span class="marquee-separator">•</span>
+        <span class="marquee-item">🐉 Paskibra Gala Taksaka - SMKN 5 Kota Madiun</span>
+    </div>
+</div>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+        	<img src="/images/logo.png" alt="Logo PAGASKA">
+            <h1>PAGASKA</h1>
+            <p>Paskibra Gala Taksaka<br>SMK Negeri 5 Kota Madiun</p>
+            <a href="#about" class="btn">Selengkapnya</a>
+        </div>
+    </section>
+
+    <!-- Tentang -->
+    <section id="about">
+        <h2>Tentang PAGASKA</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p><strong>PAGASKA (Paskibra Gala Taksaka)</strong> adalah ekstrakurikuler Paskibra dari SMK Negeri 5 Kota Madiun yang berdedikasi dalam melatih kedisiplinan, kepemimpinan, dan nasionalisme.</p>
+                <p>Kami fokus pada pelatihan baris-berbaris, pengibaran bendera, dan pembentukan karakter siswa yang berintegritas tinggi serta memiliki jiwa patriotisme.</p>
+                <p>PAGASKA telah mengikuti berbagai kompetisi LKBB (Lomba Ketangkasan Baris Berbaris).</p>
+            </div>
+            <div class="about-img">
+                <img src="/images/logo.png" alt="Logo PAGASKA">
+            </div>
+        </div>
+    </section>
+
+    <!-- Sejarah -->
+    <section id="history">
+        <h2>Sejarah PAGASKA</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>2022 - Awal Perjalanan</h3>
+                    <p>PAGASKA didirikan sebagai ekstrakurikuler Paskibra di SMK Negeri 5 Kota Madiun. Pada tahun yang sama, mengikuti lomba LKBB pertama kali di tingkat Provinsi di Gor Lila Bhuana pada 16 Desember 2022.</p>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>2023 - Prestasi Pasukan Pengibar Bendera</h3>
+                    <p>3 Anggota PAGASKA berhasil terpilih untuk berpartisipasi dalam penurunan bendera Merah Putih di Kecamatan Dalung pada 17 Agustus 2024 di Lapangan Binaraga Dalu
+                   </div>
+                <div class="timeline-dot"></div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>2024 - Prestasi Kecamatan</h3>
+                    <p>10 siswa PAGASKA berhasil terpilih untuk berpartisipasi dalam penurunan bendera Merah Putih di Kecamatan Dalung pada 17 Agustus 2024 di Lapangan Binaraga Dalung.</p>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Struktur Organisasi -->
+    <section id="structure">
+        <h2>Struktur Organisasi</h2>
+        <div class="org-tabs">
+            <button class="org-tab active" onclick="showGen(1)">Generasi 1</button>
+            <button class="org-tab" onclick="showGen(2)">Generasi 2</button>
+            <button class="org-tab" onclick="showGen(3)">Generasi 3</button>
+        </div>
+
+        <!-- Generasi 1 -->
+        <div class="org-content active" id="gen1">
+            <div style="display: flex; justify-content: center; margin-bottom: 2rem;">
+                <div class="org-card" style="max-width: 300px;">
+                    <img src="/images/logo.png"
+                      class="member-photo"
+                      data-nama="Yulva Romhida"
+                      data-ttl="Madiun, 1 Januari 1980"
+                      data-sosmed="@yulvaromhida"
+                      onclick="openMemberLightbox(this)">
+                    <h4>Pembina</h4>
+                    <p>Bapak Yulva Romhida</p>
+                </div>
+            </div>
+            
+            <div class="org-grid">
+                <div class="org-card">
+                    <img src="https://img1.pixhost.to/images/11273/677040669_uploaded_image.jpg"
+                      class="member-photo"
+                      data-nama="Airlangga Bramanta Sukma"
+                      data-ttl="Madiun, 15 Maret 2007"
+                      data-sosmed="@rizkyndra"
+                      onclick="openMemberLightbox(this)">
+                    <h4>Pelatih</h4>
+                    <p>Airlangga</p>
+                </div>
+                <div class="org-card">
+                    <img src="/images/logo.png"
+                      class="member-photo"
+                      data-nama="Enrico Bryan"
+                      data-ttl="Madiun, 15 Maret 2007"
+                      data-sosmed="@rizkyndra"
+                      onclick="openMemberLightbox(this)">
+                    <h4>Pelatih</h4>
+                    <p>Enrico Bryan</p>
+                </div>
+                <div class="org-card">
+                    <img src="/images/logo.png"
+                      class="member-photo"
+                      data-nama="Ryan Yazid"
+                      data-ttl="Madiun, 15 Maret 2007"
+                      data-sosmed="@rizkyndra"
+                      onclick="openMemberLightbox(this)">
+                    <h4>Ketua Umum</h4>
+                    <p>Ryan Yazid</p>
+                </div>
+                <div class="org-card">
+                    <img src="/images/logo.png"
+                      class="member-photo"
+                      data-nama="Sekar Rutikasari"
+                      data-ttl="Madiun, 15 Maret 2007"
+                      data-sosmed="@rizkyndra"
+                      onclick="openMemberLightbox(this)">
+                    <h4>Wakil Ketua Umum</h4>
+                    <p>Sekar Rutikasari</p>
+                </div>
+                <div class="org-card">
+                    <img src="/images/logo.png"
+                      class="member-photo"
+                      data-nama="Ifa"
+                      data-ttl="Madiun, 15 Maret 2007"
+                      data-sosmed="@rizkyndra"
+                      onclick="openMemberLightbox(this)">
+                    <h4>Sekretaris</h4>
+                    <p>Ifa</p>
+                </div>
+                <div class="org-card">
+                    <img src="/images/logo.png"
+                      class="member-photo"
+                      data-nama="Feby"
+                      data-ttl="Madiun, 15 Maret 2007"
+                      data-sosmed="@rizkyndra"
+                      onclick="openMemberLightbox(this)">
+                    <h4>Bendahara</h4>
+                    <p>Feby</p>
+                  </div>
+                  </div>
+                  <div class="more-structure" id="moreGen1">
+                    <div class="org-grid">
+                <div class="org-card">
+                    <img src="/images/logo.png"
+                      class="member-photo"
+                      data-nama="Rehan"
+                      data-ttl="Madiun, 15 Maret 2007"
+                      data-sosmed="@rizkyndra"
+                      onclick="openMemberLightbox(this)">
+                    <h4>Koor GK3</h4>
+                    <p>Rehan</p>
+                </div>
+                <div class="org-card">
+                    <img src="/images/logo.png"
+                      class="member-photo"
+                      data-nama="Ifa"
+                      data-ttl="Madiun, 15 Maret 2007"
+                      data-sosmed="@rizkyndra"
+                      onclick="openMemberLightbox(this)">
+                    <h4>GK3</h4>
+                    <p>Yasir Isa</p>
+                </div>
+                <div class="org-card">
+                    <img src="/images/logo.png"
+                      class="member-photo"
+                      data-nama="Feby"
+                      data-ttl="Madiun, 15 Maret 2007"
+                      data-sosmed="@rizkyndra"
+                      onclick="openMemberLightbox(this)">
+                    <h4>GK3</h4>
+                    <p>William</p>
+                  </div>
+                <div class="org-card">
+                    <img src="/images/logo.png"
+                      class="member-photo"
+                      data-nama="Rehan"
+                      data-ttl="Madiun, 15 Maret 2007"
+                      data-sosmed="@rizkyndra"
+                      onclick="openMemberLightbox(this)">
+                    <h4>GK3</h4>
+                    <p>Dina</p>
+                </div>
+               </div>
+          </div>
+         </div>
+
+        <div class="org-content" id="gen2">
+              <div style="display: flex; justify-content: center; margin-bottom: 2rem;">
+                <div class="org-card" style="max-width: 300px;">
+                    <img src="/images/logo.png"
+                      class="member-photo"
+                      data-nama="Yulva Romhida"
+                      data-ttl="Madiun, 1 Januari 1980"
+                      data-sosmed="@yulvaromhida"
+                      onclick="openMemberLightbox(this)">
+                    <h4>Pembina</h4>
+                    <p>Bapak Yulva Romhida</p>
+                </div>
+            </div>
+            
+            <div class="org-grid">
+                <div class="org-card">
+                    <img src="https://img1.pixhost.to/images/11273/677040669_uploaded_image.jpg"
+                      class="member-photo"
+                      data-nama="Airlangga Bramanta Sukma"
+                      data-ttl="Madiun, 15 Maret 2000"
+                      data-sosmed="@rizkyndra"
+                      onclick="openMemberLightbox(this)">
+                    <h4>Pelatih</h4>
+                    <p>Airlangga</p>
+                </div>
+                <div class="org-card">
+                    <img src="/images/logo.png"
+                      class="member-photo"
+                      data-nama="Enrico Bryan"
+                      data-ttl="Madiun, 15 Maret 2007"
+                      data-sosmed="@rizkyndra"
+                      onclick="openMemberLightbox(this)">
+                    <h4>Pelatih</h4>
+                    <p>Enrico Bryan</p>
+                </div>
+                <div class="org-card">
+                    <img src="/images/logo.png"
+                      class="member-photo"
+                      data-nama="Rizky Indra Permana"
+                      data-ttl="Madiun, 15 Maret 2007"
+                      data-sosmed="@rizkyndra"
+                      onclick="openMemberLightbox(this)">
+                    <h4>Ketua Umum</h4>
+                    <p>Rizky Indra Permana</p>
+                </div>
+                <div class="org-card">
+                    <img src="/images/logo.png"
+                      class="member-photo"
+                      data-nama="Dwi Bella Noviyanti"
+                      data-ttl="Madiun, 20 April 2007"
+                      data-sosmed="@dwibella"
+                      onclick="openMemberLightbox(this)">
+                    <h4>Wakil Ketua Umum</h4>
+                    <p>Dwi Bella Noviyanti</p>
+                </div>
+                <div class="org-card">
+                    <img src="/images/logo.png"
+                      class="member-photo"
+                      data-nama="Anastasya"
+                      data-ttl="Madiun, 10 Mei 2007"
+                      data-sosmed="@anastasya"
+                      onclick="openMemberLightbox(this)">
+                    <h4>Sekretaris</h4>
+                    <p>Anastasya</p>
+                </div>
+                <div class="org-card">
+                    <img src="/images/logo.png"
+                      class="member-photo"
+                      data-nama="Khofifah"
+                      data-ttl="Madiun, 5 Juni 2007"
+                      data-sosmed="@khofifah"
+                      onclick="openMemberLightbox(this)">
+                    <h4>Bendahara</h4>
+                    <p>Khofifah</p>
+                </div>
+                  <div class="org-card">
+                        <img src="/images/logo.png"
+                          class="member-photo"
+                          data-nama="Satria Nur Hidayatullah"
+                          data-ttl="Madiun, 12 Juli 2007"
+                          data-sosmed="@satria_nh"
+                          onclick="openMemberLightbox(this)">
+                        <h4>DTP</h4>
+                        <p>Satria Nur Hidayatullah</p>
+                    </div>
+                    <div class="org-card">
+                        <img src="/images/logo.png"
+                          class="member-photo"
+                          data-nama="Reyna Natasya"
+                          data-ttl="Madiun, 18 Agustus 2007"
+                          data-sosmed="@reyna_natasya"
+                          onclick="openMemberLightbox(this)">
+                        <h4>DTP</h4>
+                        <p>Reyna Natasya</p>
+                    </div>
+                    </div>
+                    <div class="more-structure" id="moreGen2">
+                    <div class="org-grid">
+                    <div class="org-card">
+                        <img src="/images/logo.png"
+                          class="member-photo"
+                          data-nama="Ramzy Cahya Fauzan"
+                          data-ttl="Madiun, 22 September 2007"
+                          data-sosmed="@ramzy_cf"
+                          onclick="openMemberLightbox(this)">
+                        <h4>Koor GK3</h4>
+                        <p>Ramzy Cahya Fauzan</p>
+                    </div>
+                    <div class="org-card">
+                        <img src="/images/logo.png"
+                          class="member-photo"
+                          data-nama="Sapta Andika Riyanto"
+                          data-ttl="Madiun, 30 Oktober 2007"
+                          data-sosmed="@sapta_ar"
+                          onclick="openMemberLightbox(this)">
+                        <h4>GK3</h4>
+                        <p>Sapta Andika Riyanto</p>
+                    </div>
+                    <div class="org-card">
+                        <img src="/images/logo.png"
+                          class="member-photo"
+                          data-nama="Farhan Rizky Devannanda"
+                          data-ttl="Madiun, 5 November 2007"
+                          data-sosmed="@farhan_rd"
+                          onclick="openMemberLightbox(this)">
+                        <h4>GK3</h4>
+                        <p>Farhan Rizky Devannanda</p>
+                    </div>
+                    <div class="org-card">
+                        <img src="/images/logo.png"
+                          class="member-photo"
+                          data-nama="Keisya"
+                          data-ttl="Madiun, 14 Desember 2007"
+                          data-sosmed="@keisya"
+                          onclick="openMemberLightbox(this)">
+                        <h4>GK3</h4>
+                        <p>Keisya</p>
+                    </div>
+                    <div class="org-card">
+                        <img src="/images/logo.png"
+                          class="member-photo"
+                          data-nama="Tata Regita"
+                          data-ttl="Madiun, 8 Januari 2008"
+                          data-sosmed="@tata_regita"
+                          onclick="openMemberLightbox(this)">
+                        <h4>Koor Disarda</h4>
+                        <p>Tata Regita</p>
+                    </div>
+                    <div class="org-card">
+                        <img src="/images/logo.png"
+                          class="member-photo"
+                          data-nama="Amanda Regina"
+                          data-ttl="Madiun, 20 Februari 2008"
+                          data-sosmed="@disarda1"
+                          onclick="openMemberLightbox(this)">
+                        <h4>Disarda</h4>
+                        <p>Amanda Regina</p>
+                  </div>
+                  <div class="org-card">
+                        <img src="/images/logo.png"
+                          class="member-photo"
+                          data-nama="Ailen"
+                          data-ttl="Madiun, 20 Februari 2008"
+                          data-sosmed="@disarda1"
+                          onclick="openMemberLightbox(this)">
+                        <h4>Disarda</h4>
+                        <p>Ailen </p>
+                  </div>
+                  <div class="org-card">
+                        <img src="/images/logo.png"
+                          class="member-photo"
+                          data-nama="Lael"
+                          data-ttl="Madiun, 20 Februari 2008"
+                          data-sosmed="@disarda1"
+                          onclick="openMemberLightbox(this)">
+                        <h4>Disarda</h4>
+                        <p>Lael</p>
+                  </div>
+                  <div class="org-card">
+                        <img src="/images/logo.png"
+                          class="member-photo"
+                          data-nama="Dea"
+                          data-ttl="Madiun, 20 Februari 2008"
+                          data-sosmed="@disarda1"
+                          onclick="openMemberLightbox(this)">
+                        <h4>Disarda</h4>
+                        <p>Dea</p>
+                  </div>
+                  <div class="org-card">
+                        <img src="/images/logo.png"
+                          class="member-photo"
+                          data-nama="Rizky Dava Mahendra"
+                          data-ttl="Madiun, 20 Februari 2008"
+                          data-sosmed="@disarda1"
+                          onclick="openMemberLightbox(this)">
+                        <h4>Disarda</h4>
+                        <p>Rizky Dava M.</p>
+                  </div>
+                  <div class="org-card">
+                        <img src="/images/logo.png"
+                          class="member-photo"
+                          data-nama="Alan Pratama"
+                          data-ttl="Madiun, 20 Februari 2008"
+                          data-sosmed="@disarda1"
+                          onclick="openMemberLightbox(this)">
+                        <h4>Disarda</h4>
+                        <p>Alan Pratama</p>
+                  </div>
+                  <div class="org-card">
+                        <img src="/images/logo.png"
+                          class="member-photo"
+                          data-nama="Yohanes David"
+                          data-ttl="Madiun, 20 Februari 2008"
+                          data-sosmed="@disarda1"
+                          onclick="openMemberLightbox(this)">
+                        <h4>Disarda</h4>
+                        <p>Yohanes David </p>
+                  </div>
+                  <div class="org-card">
+                        <img src="/images/logo.png"
+                          class="member-photo"
+                          data-nama="Aditya"
+                          data-ttl="Madiun, 20 Februari 2008"
+                          data-sosmed="@disarda1"
+                          onclick="openMemberLightbox(this)">
+                        <h4>Disarda</h4>
+                        <p>Aditya</p>
+                  </div>
+                  <div class="org-card">
+                        <img src="/images/logo.png"
+                          class="member-photo"
+                          data-nama="Farel"
+                          data-ttl="Madiun, 20 Februari 2008"
+                          data-sosmed="@disarda1"
+                          onclick="openMemberLightbox(this)">
+                        <h4>Disarda</h4>
+                        <p>Farel</p>
+                  </div>
+                  <div class="org-card">
+                        <img src="/images/logo.png"
+                          class="member-photo"
+                          data-nama="Giovanni Adhi Pratama"
+                          data-ttl="Madiun, 24 Maret 2008"
+                          data-sosmed="@disarda1"
+                          onclick="openMemberLightbox(this)">
+                        <h4>Koor Infokom</h4>
+                        <p>Vex </p>
+                  </div>
+                  <div class="org-card">
+                        <img src="/images/logo.png"
+                          class="member-photo"
+                          data-nama="Desy"
+                          data-ttl="Madiun, 20 Februari 2008"
+                          data-sosmed="@disarda1"
+                          onclick="openMemberLightbox(this)">
+                        <h4>Infokom</h4>
+                        <p>Desy</p>
+                  </div>
+                  <div class="org-card">
+                        <img src="/images/logo.png"
+                          class="member-photo"
+                          data-nama="Yusilla"
+                          data-ttl="Madiun, 20 Februari 2008"
+                          data-sosmed="@disarda1"
+                          onclick="openMemberLightbox(this)">
+                        <h4>Infokom</h4>
+                        <p>Yusilla</p>
+                  </div>
+                  <div class="org-card">
+                        <img src="/images/logo.png"
+                          class="member-photo"
+                          data-nama="Alisya"
+                          data-ttl="Madiun, 20 Februari 2008"
+                          data-sosmed="@disarda1"
+                          onclick="openMemberLightbox(this)">
+                        <h4>Infokom</h4>
+                        <p>Alisya</p>
+                  </div>
+            </div>
+        </div>
+      </div>
+
+        <!-- Generasi 3 -->
+        <div class="org-content" id="gen3">
+              <div style="display: flex; justify-content: center; margin-bottom: 2rem;">
+                <div class="org-card" style="max-width: 300px;">
+                    <img src="/images/logo.png"
+                      class="member-photo"
+                      data-nama="Yulva Romhida"
+                      data-ttl="Madiun, 1 Januari 1980"
+                      data-sosmed="@yulvaromhida"
+                      onclick="openMemberLightbox(this)">
+                    <h4>Pembina</h4>
+                    <p>Bapak Yulva Romhida</p>
+                </div>
+            </div>
+            
+            <div class="org-grid">
+                <div class="org-card">
+                    <img src="https://img1.pixhost.to/images/11273/677040669_uploaded_image.jpg"
+                      class="member-photo"
+                      data-nama="Airlangga Bramanta Sukma"
+                      data-ttl="Madiun, 15 Maret 2000"
+                      data-sosmed="@rizkyndra"
+                      onclick="openMemberLightbox(this)">
+                    <h4>Pelatih</h4>
+                    <p>Airlangga</p>
+                </div>
+                <div class="org-card">
+                    <img src="/images/logo.png"
+                      class="member-photo"
+                      data-nama="Enrico Bryan"
+                      data-ttl="Madiun, 15 Maret 2007"
+                      data-sosmed="@rizkyndra"
+                      onclick="openMemberLightbox(this)">
+                    <h4>Pelatih</h4>
+                    <p>Enrico Bryan</p>
+                </div>
+                <div class="org-card">
+                    <img src="https://files.catbox.moe/v19bas.jpg"
+                      class="member-photo"
+                      data-nama="Muhammad Afrizal"
+                      data-ttl="Madiun, 15 Maret 2007"
+                      data-sosmed="@rizkyndra"
+                      onclick="openMemberLightbox(this)">
+                    <h4>Ketua Umum</h4>
+                    <p>Muhammad Afrizal</p>
+                </div>
+                <div class="org-card">
+                    <img src="https://files.catbox.moe/chandu.jpg"
+                      class="member-photo"
+                      data-nama="Fatimah Az-Zahra"
+                      data-ttl="Madiun, 15 Maret 2007"
+                      data-sosmed="@rizkyndra"
+                      onclick="openMemberLightbox(this)">
+                    <h4>Wakil Ketua Umum</h4>
+                    <p>Fatimah Az-Zahra</p>
+                </div>
+                <div class="org-card">
+                    <img src="https://files.catbox.moe/45x6wn.jpg"
+                      class="member-photo"
+                      data-nama="Nazuwa"
+                      data-ttl="Madiun, 15 Maret 2007"
+                      data-sosmed="@rizkyndra"
+                      onclick="openMemberLightbox(this)">
+                    <h4>Sekretaris 1</h4>
+                    <p>Nazuwa</p>
+                </div>
+                <div class="org-card">
+                    <img src="https://files.catbox.moe/3l1er2.jpg"
+                      class="member-photo"
+                      data-nama="Asyifa"
+                      data-ttl="Madiun, 15 Maret 2007"
+                      data-sosmed="@rizkyndra"
+                      onclick="openMemberLightbox(this)">
+                    <h4>Sekretaris 2</h4>
+                    <p>Asyifa</p>
+                </div>
+                <div class="org-card">
+                    <img src="/images/logo.png"
+                      class="member-photo"
+                      data-nama="Eva"
+                      data-ttl="Madiun, 15 Maret 2007"
+                      data-sosmed="@rizkyndra"
+                      onclick="openMemberLightbox(this)">
+                    <h4>Bendahara 1</h4>
+                    <p>Eva</p>
+                </div>
+                <div class="org-card">
+                    <img src="/images/logo.png"
+                      class="member-photo"
+                      data-nama="Winni"
+                      data-ttl="Madiun, 15 Maret 2007"
+                      data-sosmed="@rizkyndra"
+                      onclick="openMemberLightbox(this)">
+                    <h4>Bendahara 2</h4>
+                    <p>Winni</p>
+                </div>
+                <div class="org-card">
+                    <img src="/images/logo.png"
+                      class="member-photo"
+                      data-nama="Yoga Prasetyo"
+                      data-ttl="Madiun, 15 Maret 2007"
+                      data-sosmed="@rizkyndra"
+                      onclick="openMemberLightbox(this)">
+                    <h4>DTP</h4>
+                    <p>Yoga Prasetyo</p>
+                </div>
+                <div class="org-card">
+                    <img src="/images/logo.png"
+                      class="member-photo"
+                      data-nama="Lelly Anggraini"
+                      data-ttl="Madiun, 15 Maret 2007"
+                      data-sosmed="@rizkyndra"
+                      onclick="openMemberLightbox(this)">
+                    <h4>DTP</h4>
+                    <p>Lelly Anggraini</p>
+                </div>
+            </div>
+            <div class="more-structure" id="moreGen3">
+              <div class="org-grid">
+                <div class="org-card">
+                    <img src="https://files.catbox.moe/e2l2rh.JPG"
+                      class="member-photo"
+                      data-nama="Fahri Lintang Saputra"
+                      data-ttl="Madiun, 15 Maret 2007"
+                      data-sosmed="@rizkyndra"
+                      onclick="openMemberLightbox(this)">
+                    <h4>Koor GK3</h4>
+                    <p>Fahri Lintang Saputra</p>
+                </div>
+                <div class="org-card">
+                    <img src="https://files.catbox.moe/tidm8p.jpg"
+                      class="member-photo"
+                      data-nama="Clarinta"
+                      data-ttl="Madiun, 15 Maret 2007"
+                      data-sosmed="@rizkyndra"
+                      onclick="openMemberLightbox(this)">
+                    <h4>GK3</h4>
+                    <p>Clarinta</p>
+                </div>
+                <div class="org-card">
+                    <img src="https://img1.pixhost.to/images/11382/680036473_uploaded_image.jpg"
+                      class="member-photo"
+                      data-nama="Nur"
+                      data-ttl="Madiun, 15 Maret 2007"
+                      data-sosmed="@rizkyndra"
+                      onclick="openMemberLightbox(this)">
+                    <h4>GK3</h4>
+                    <p>Nur</p>
+                </div>
+                <div class="org-card">
+                    <img src="https://img1.pixhost.to/images/11382/680039074_uploaded_image.jpg"
+                      class="member-photo"
+                      data-nama="Violita"
+                      data-ttl="Madiun, 15 Maret 2007"
+                      data-sosmed="@rizkyndra"
+                      onclick="openMemberLightbox(this)">
+                    <h4>GK3</h4>
+                    <p>Violita</p>
+                </div>
+                <div class="org-card">
+                        <img src="/images/logo.png"
+                          class="member-photo"
+                          data-nama="Aymel"
+                          data-ttl="Madiun, 20 Februari 2008"
+                          data-sosmed="@disarda1"
+                          onclick="openMemberLightbox(this)">
+                        <h4>GK3</h4>
+                        <p>Aymel </p>
+                  </div>
+                  <div class="org-card">
+                        <img src="https://files.catbox.moe/nilsx8.jpg"
+                          class="member-photo"
+                          data-nama="Suci Rofiqoh"
+                          data-ttl="Madiun, 20 Februari 2008"
+                          data-sosmed="@disarda1"
+                          onclick="openMemberLightbox(this)">
+                        <h4>Koor Disarda</h4>
+                        <p>Suci Rofiqoh</p>
+                  </div>
+                  <div class="org-card">
+                        <img src="https://files.catbox.moe/j2jbsv.jpg"
+                          class="member-photo"
+                          data-nama="Nabila"
+                          data-ttl="Madiun, 20 Februari 2008"
+                          data-sosmed="@disarda1"
+                          onclick="openMemberLightbox(this)">
+                        <h4>Disarda</h4>
+                        <p>Nabila</p>
+                  </div>
+                  <div class="org-card">
+                        <img src="https://files.catbox.moe/0k1ng3.jpeg"
+                          class="member-photo"
+                          data-nama="Rolly Sadion"
+                          data-ttl="Madiun, 20 Februari 2008"
+                          data-sosmed="@disarda1"
+                          onclick="openMemberLightbox(this)">
+                        <h4>Disarda</h4>
+                        <p>Rolly Sadion</p>
+                  </div>
+                  <div class="org-card">
+                        <img src="https://files.catbox.moe/dv98iv.jpg"
+                          class="member-photo"
+                          data-nama="Subhanifah"
+                          data-ttl="Madiun, 20 Februari 2008"
+                          data-sosmed="@disarda1"
+                          onclick="openMemberLightbox(this)">
+                        <h4>Disarda</h4>
+                        <p>Subhanifah </p>
+                  </div>
+                  <div class="org-card">
+                        <img src="https://files.catbox.moe/wfkjm5.jpg"
+                          class="member-photo"
+                          data-nama="Mariska"
+                          data-ttl="Madiun, 20 Februari 2008"
+                          data-sosmed="@disarda1"
+                          onclick="openMemberLightbox(this)">
+                        <h4>Disarda</h4>
+                        <p>Mariska</p>
+                  </div>
+                  <div class="org-card">
+                        <img src="https://files.catbox.moe/l4egyk.jpg"
+                          class="member-photo"
+                          data-nama="Jahra' Anasula"
+                          data-ttl="Madiun, 20 Februari 2008"
+                          data-sosmed="@disarda1"
+                          onclick="openMemberLightbox(this)">
+                        <h4>Disarda</h4>
+                        <p>Jahra' Anasula</p>
+                  </div>
+                  <div class="org-card">
+                        <img src="https://files.catbox.moe/morf3o.png"
+                          class="member-photo"
+                          data-nama="Ella"
+                          data-ttl="Madiun, 20 Februari 2008"
+                          data-sosmed="@disarda1"
+                          onclick="openMemberLightbox(this)">
+                        <h4>Disarda</h4>
+                        <p>Ella</p>
+                  </div>
+                  <div class="org-card">
+                        <img src="/images/logo.png"
+                          class="member-photo"
+                          data-nama="Anggota Disarda 1"
+                          data-ttl="Madiun, 20 Februari 2008"
+                          data-sosmed="@disarda1"
+                          onclick="openMemberLightbox(this)">
+                        <h4>Disarda</h4>
+                        <p>Unknown</p>
+                  </div>
+                  <div class="org-card">
+                        <img src="/images/logo.png"
+                          class="member-photo"
+                          data-nama="Anggota Disarda 1"
+                          data-ttl="Madiun, 20 Februari 2008"
+                          data-sosmed="@disarda1"
+                          onclick="openMemberLightbox(this)">
+                        <h4>Disarda</h4>
+                        <p>Unknown</p>
+                  </div>
+                  <div class="org-card">
+                        <img src="https://files.cloudkuimages.guru/images/935e943b0778.jpg"
+                          class="member-photo"
+                          data-nama="Adly"
+                          data-ttl="Madiun, 20 Februari 2008"
+                          data-sosmed="@disarda1"
+                          onclick="openMemberLightbox(this)">
+                        <h4>Disarda</h4>
+                        <p>Adly</p>
+                  </div>
+                  <div class="org-card">
+                        <img src="/images/logo.png"
+                          class="member-photo"
+                          data-nama="Richy Yuga Tri Finalya"
+                          data-ttl="Madiun, 20 Februari 2008"
+                          data-sosmed="@disarda1"
+                          onclick="openMemberLightbox(this)">
+                        <h4>Koor Infokom</h4>
+                        <p>Richy Yuga T.F </p>
+                  </div>
+                  <div class="org-card">
+                        <img src="https://files.catbox.moe/e58hvv.jpg"
+                          class="member-photo"
+                          data-nama="Annisa Aprilia"
+                          data-ttl="Madiun, 20 Februari 2008"
+                          data-sosmed="@disarda1"
+                          onclick="openMemberLightbox(this)">
+                        <h4>Infokom</h4>
+                        <p>Annisa Aprilia</p>
+                  </div>
+                  <div class="org-card">
+                        <img src="https://files.catbox.moe/tvj0it.jpg"
+                          class="member-photo"
+                          data-nama="Bilqis"
+                          data-ttl="Madiun, 20 Februari 2008"
+                          data-sosmed="@disarda1"
+                          onclick="openMemberLightbox(this)">
+                        <h4>Infokom</h4>
+                        <p>Bilqis</p>
+                  </div>
+                  <div class="org-card">
+                        <img src="https://img1.pixhost.to/images/11382/680038604_uploaded_image.jpg"
+                          class="member-photo"
+                          data-nama="Azzahra Khanza"
+                          data-ttl="Madiun, 20 Februari 2008"
+                          data-sosmed="@disarda1"
+                          onclick="openMemberLightbox(this)">
+                        <h4>Infokom</h4>
+                        <p>Azzahra Khanza</p>
+                  </div>
+                  <div class="org-card">
+                        <img src="https://files.catbox.moe/v86a5u.jpg"
+                          class="member-photo"
+                          data-nama="Nindia Artita Lestari"
+                          data-ttl="Madiun, 20 Februari 2008"
+                          data-sosmed="@disarda1"
+                          onclick="openMemberLightbox(this)">
+                        <h4>Infokom</h4>
+                        <p>Nindia Artita L.</p>
+                  </div>
+                  <div class="org-card">
+                        <img src="https://files.catbox.moe/8f5iuy.jpg"
+                          class="member-photo"
+                          data-nama="Fahrel"
+                          data-ttl="Madiun, 20 Februari 2008"
+                          data-sosmed="@disarda1"
+                          onclick="openMemberLightbox(this)">
+                        <h4>Infokom</h4>
+                        <p>Fahrel</p>
+                  </div>
+                  <div class="org-card">
+                        <img src="https://files.catbox.moe/qippyf.jpg"
+                          class="member-photo"
+                          data-nama="Janathan Hafiz Nugroho"
+                          data-ttl="Madiun, 20 Februari 2008"
+                          data-sosmed="@disarda1"
+                          onclick="openMemberLightbox(this)">
+                        <h4>Infokom</h4>
+                        <p>Janathan Hafiz N.</p>
+                  </div>
+            </div>
+        </div>
+     </div>
+ </div>
+  
+  <button class="toggle-btn" onclick="toggleCurrentGen()">
+            Tampilkan Selengkapnya
+        </button>
+    </section>
+
+    <!-- Prestasi -->
+    <section id="achievements">
+        <div class="achievements-container">
+            <h2>Prestasi PAGASKA</h2>
+            
+            <article class="achievement-article">
+                <div class="achievement-header">
+                    <div class="achievement-badge">PASUKAN PENGIBAR BENDERA</div>
+                    <h2 class="achievement-title">PASUKAN PENGIBAR BENDERA 2023</h2>
+                    <div class="achievement-meta">
+                        <span>🇮🇩 PASUKAN PENGIBAR BENDERA</span>
+                        <span>📅 17 Agustus 2023</span>
+                        <span>📍 Alun-alun Kota Madiun</span>
+                    </div>
+                </div>
+                
+                <div class="achievement-body">
+                    <img src="https://files.catbox.moe/73e6x8.jpg" alt="PAGASKA" class="achievement-image">
+                    <p class="image-caption">3 Anggota PAGASKA berhasil lolos menjadi Pasukan Pengibar Bendera Kota Madiun 2023</p>
+                    
+                    <div class="achievement-description">
+                        <p>Selamat & Sukses Atas keberhasilannya menjadi anggota Pasukan Pengibar Bendera Kota Madiun Tahun 2023.</p>
+                    </div>
+                    
+                    <div class="achievement-details">
+                        <div class="detail-item">
+                            <div class="detail-label">Nama Lomba:</div>
+                            <div class="detail-value">Seleksi Pasukan Pengibar Bendera Kota Madiun 2023</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Tempat:</div>
+                            <div class="detail-value">Alun-Alun Kota Madiun</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Penyelenggara:</div>
+                            <div class="detail-value">Pemkot Madiun</div>
+                        </div>
+                    </div>
+                    
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/0WlEDEEisbM" 
+                                title="Dokumentasi Pengibaran Bendera Tahun 2023" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                        </iframe>
+                    </div>
+                    
+                    <h3 style="color: var(--secondary); margin: 30px 0 15px;">Gallery Dokumentasi</h3>
+                    <div class="gallery-grid" id="gallery1">
+                        <div class="gallery-item" data-index="0">
+                            <img src="https://files.catbox.moe/l8qpcn.jpg" 
+                                 data-src="https://files.catbox.moe/l8qpcn.jpg"
+                                 alt="Penampilan">
+                        </div>
+                        <div class="gallery-item" data-index="1">
+                            <img src="/images/logo.png" 
+                                 data-src="/images/logo.png"
+                                 alt="Penampilan formasi kreatif">
+                        </div>
+                        <div class="gallery-item" data-index="2">
+                            <img src="/images/logo.png" 
+                                 data-src="/images/logo.png"
+                                 alt="Pengibaran bendera">
+                        </div>
+                        <div class="gallery-item" data-index="3">
+                            <img src="/images/logo.png" 
+                                 data-src="/images/logo.png"
+                                 alt="Penyerahan piala">
+                        </div>
+                    </div>
+                    
+                    <div class="achievement-footer">
+                        <div class="tags">
+                            <span class="tag">PPI Kota Madiun</span>
+                            <span class="tag">Pasukan Pengibar Bendera</span>
+                            <span class="tag">Kota Madiun</span>
+                        </div>
+                        <button class="read-more" onclick="openDetailLightbox('ppi')">
+                            Baca Selengkapnya
+                            <span>→</span>
+                        </button>
+                    </div>
+                </div>
+            </article>
+            
+            <!-- Prestasi 1 -->
+            <article class="achievement-article">
+                <div class="achievement-header">
+                    <div class="achievement-badge">JUARA HARAPAN 2</div>
+                    <h2 class="achievement-title">Parade Senja 2024</h2>
+                    <div class="achievement-meta">
+                        <span>🏆 Juara Harapan 2</span>
+                        <span>📅 25 November 2024</span>
+                        <span>📍Pahlawan Street Center, Madiun</span>
+                    </div>
+                </div>
+                
+                <div class="achievement-body">
+                    <img src="https://files.catbox.moe/73e6x8.jpg" alt="Tim PAGASKA Juara 1 LKBB" class="achievement-image">
+                    <p class="image-caption">PAGASKA berhasil meraih juara harapan 2 di Parade Senja Kota Madiun 2024</p>
+                    
+                    <div class="achievement-description">
+                        <p>Prestasi gemilang yang berhasil ditorehkan oleh PAGASKA dalam Lomba Parade Senja Kota Madiun Tahun 2024. Tim kami berhasil mengungguli 15 tim peserta lainnya dengan total nilai tertinggi dalam semua kategori penilaian.</p>
+                    </div>
+                    
+                    <div class="achievement-details">
+                        <div class="detail-item">
+                            <div class="detail-label">Nama Lomba:</div>
+                            <div class="detail-value">Parade Senja 2024</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Tempat:</div>
+                            <div class="detail-value">Pahlawan Street Center, Kota Madiun</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Penyelenggara:</div>
+                            <div class="detail-value">Pemkot Madiun</div>
+                        </div>
+                    </div>
+                    
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/d5gf9dXbPi0" 
+                                title="Dokumentasi LKBB 2024" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                        </iframe>
+                    </div>
+                    
+                    <h3 style="color: var(--secondary); margin: 30px 0 15px;">Gallery Dokumentasi</h3>
+                    <div class="gallery-grid" id="gallery1">
+                        <div class="gallery-item" data-index="0">
+                            <img src="https://files.catbox.moe/l8qpcn.jpg" 
+                                 data-src="https://files.catbox.moe/l8qpcn.jpg"
+                                 alt="Penampilan">
+                        </div>
+                        <div class="gallery-item" data-index="1">
+                            <img src="/images/logo.png" 
+                                 data-src="/images/logo.png"
+                                 alt="Penampilan formasi kreatif">
+                        </div>
+                        <div class="gallery-item" data-index="2">
+                            <img src="/images/logo.png" 
+                                 data-src="/images/logo.png"
+                                 alt="Pengibaran bendera">
+                        </div>
+                        <div class="gallery-item" data-index="3">
+                            <img src="/images/logo.png" 
+                                 data-src="/images/logo.png"
+                                 alt="Penyerahan piala">
+                        </div>
+                    </div>
+                    
+                    <div class="achievement-footer">
+                        <div class="tags">
+                            <span class="tag">LKBB</span>
+                            <span class="tag">Juara 1</span>
+                            <span class="tag">Kota Madiun</span>
+                        </div>
+                        <button class="read-more" onclick="openDetailLightbox('prestasi1')">
+                            Baca Selengkapnya
+                            <span>→</span>
+                        </button>
+                    </div>
+                </div>
+            </article>
+            
+            <!-- Prestasi 2 -->
+            <article class="achievement-article">
+                <div class="achievement-header">
+                    <div class="achievement-badge">PARTISIPASI</div>
+                    <h2 class="achievement-title">Penurunan Bendera Kecamatan Dalung 2024</h2>
+                    <div class="achievement-meta">
+                        <span>🎖️ Kehormatan</span>
+                        <span>📅 17 Agustus 2024</span>
+                        <span>📍 Lapangan Binaraga, Dalung</span>
+                    </div>
+                </div>
+                
+                <div class="achievement-body">
+                    <img src="/images/logo.png" alt="Penurunan Bendera Kecamatan" class="achievement-image">
+                    <p class="image-caption">10 anggota PAGASKA bertugas dalam upacara penurunan bendera di Kecamatan Dalung</p>
+                    
+                    <div class="achievement-description">
+                        <p>Kehormatan yang dipercayakan kepada 10 anggota terpilih PAGASKA untuk bertugas dalam upacara penurunan bendera merah putih dalam rangka memperingati Hari Kemerdekaan Republik Indonesia ke-79 di Kecamatan Dalung.</p>
+                    </div>
+                    
+                    <div class="achievement-details">
+                        <div class="detail-item">
+                            <div class="detail-label">Acara:</div>
+                            <div class="detail-value">Upacara Penurunan Bendera HUT RI ke-79</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Lokasi:</div>
+                            <div class="detail-value">Lapangan Binaraga, Kecamatan Dalung</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Jumlah Personil:</div>
+                            <div class="detail-value">10 anggota terpilih PAGASKA</div>
+                        </div>
+                    </div>
+                    
+                    <div class="achievement-footer">
+                        <div class="tags">
+                            <span class="tag">17 Agustus</span>
+                            <span class="tag">Pengibaran Bendera</span>
+                            <span class="tag">Kecamatan Dalung</span>
+                        </div>
+                        <button class="read-more" onclick="openDetailLightbox('prestasi2')">
+                            Baca Dokumentasi
+                            <span>→</span>
+                        </button>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- Lightbox untuk Gallery -->
+    <div id="galleryLightbox" class="gallery-lightbox">
+        <div class="gallery-lightbox-content">
+            <button class="lightbox-close" onclick="closeGalleryLightbox()">×</button>
+            <img id="lightboxImage" class="gallery-lightbox-img" src="" alt="">
+            <button class="lightbox-nav lightbox-prev" onclick="prevImage()">❮</button>
+            <button class="lightbox-nav lightbox-next" onclick="nextImage()">❯</button>
+            <div class="lightbox-counter">
+                <span id="currentIndex">1</span> / <span id="totalImages">4</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lightbox untuk Baca Selengkapnya -->
+    <div id="detailLightbox" class="detail-lightbox">
+        <div class="detail-lightbox-content">
+            <div class="detail-lightbox-header">
+                <h3 id="detailTitle">Detail Prestasi</h3>
+            </div>
+            
+            <img id="detailMainImage" class="detail-lightbox-image" src="" alt="">
+            
+            <div class="detail-lightbox-text" id="detailText">
+                <!-- Konten akan diisi oleh JavaScript -->
+            </div>
+            
+            <div class="detail-lightbox-gallery" id="detailGallery">
+                <!-- Gallery kecil akan diisi oleh JavaScript -->
+            </div>
+            
+            <div class="detail-lightbox-footer">
+                <button class="detail-close" onclick="closeDetailLightbox()">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="social-links">
+            <a href="https://www.instagram.com/pagaska_/" target="_blank" aria-label="Instagram">
+                 <i class="fi fi-brands-instagram"></i> Instagram
+                </a>
+            <a href="https://www.youtube.com/pagaskasmkn5madiun" target="_blank" aria-label="YouTube">
+                 <i class="fi fi-brands-youtube"></i> YouTube
+               </a>
+            <a href="https://www.tiktok.com/gala.taksaka" target="_blank" aria-label="TikTok">
+                 <i class="fi fi-brands-tik-tok"></i> TikTok
+              </a>
+            <a href="https://www.smkn5madiun.sch.id" target="_blank" aria-label="Website Sekolah">
+                 <i class="fi fi-rs-site-alt"></i> Website Sekolah
+              </a>
+        </div>
+        <p>&copy; 2024 PAGASKA - Paskibra Gala Taksaka. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Loading Screen
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('loading-screen').classList.add('fade-out');
+                setTimeout(function() {
+                    document.getElementById('loading-screen').style.display = 'none';
+                }, 500);
+            }, 2000);
+        });
+
+        // Menu Toggle
+        function toggleMenu() {
+            document.getElementById('navMenu').classList.toggle('active');
+        }
+        
+        // Inisialisasi Marquee dengan JavaScript
+function initMarquee() {
+    const marquee = document.getElementById('marquee');
+    const content = marquee.querySelector('.marquee-content');
+    const originalContent = content.innerHTML;
+    
+    // Duplikasi konten untuk looping mulus
+    content.innerHTML += originalContent + originalContent;
+    
+    const items = marquee.querySelectorAll('.marquee-item');
+    const totalWidth = Array.from(items).reduce((sum, item) => {
+        return sum + item.offsetWidth + 30; // 30 untuk margin
+    }, 0);
+    
+    let position = 0;
+    const speed = 0.5; // px per frame (sesuaikan kecepatan)
+    
+    function animateMarquee() {
+        position -= speed;
+        
+        // Reset posisi ketika sudah melewati satu set konten
+        if (position <= -totalWidth / 3) {
+            position = 0;
+        }
+        
+        content.style.transform = `translateX(${position}px)`;
+        requestAnimationFrame(animateMarquee);
+    }
+    
+    // Pause on hover
+    marquee.addEventListener('mouseenter', () => {
+        speedBackup = speed;
+        speed = 0;
+    });
+    
+    marquee.addEventListener('mouseleave', () => {
+        speed = speedBackup;
+    });
+    
+    animateMarquee();
+}
+
+// Panggil fungsi setelah halaman dimuat
+document.addEventListener('DOMContentLoaded', initMarquee);
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    document.getElementById('navMenu').classList.remove('active');
+                }
+            });
+        });
+
+        // ===== FUNGSI UNTUK STRUKTUR ORGANISASI =====
+        function showGen(gen) {
+            // Hide all contents
+            document.querySelectorAll('.org-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.org-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected content
+            document.getElementById('gen' + gen).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+            
+            // Sembunyikan semua "more-structure" ketika ganti tab
+            document.querySelectorAll('.more-structure').forEach(el => {
+                el.style.display = 'none';
+            });
+            
+            // Update teks button
+            const btn = document.querySelector('.toggle-btn');
+            btn.innerText = 'Tampilkan Selengkapnya';
+        }
+
+        function toggleCurrentGen() {
+            // Cari generasi yang aktif
+            const activeGen = document.querySelector('.org-content.active');
+            const genId = activeGen.id;
+            const genNumber = genId.replace('gen', '');
+            
+            const moreId = 'moreGen' + genNumber;
+            const btn = document.querySelector('.toggle-btn');
+            
+            const el = document.getElementById(moreId);
+            if (el) {
+                if (el.style.display === 'block') {
+                    el.style.display = 'none';
+                    btn.innerText = 'Tampilkan Selengkapnya';
+                } else {
+                    el.style.display = 'block';
+                    btn.innerText = 'Sembunyikan';
+                }
+            }
+        }
+
+        function openMemberLightbox(el) {
+            const content = `
+                <div style="text-align: center; padding: 20px;">
+                    <img src="${el.src}" 
+                         alt="${el.dataset.nama}" 
+                         style="width: 100%; max-height: 300px; object-fit: cover; border-radius: 10px; margin-bottom: 20px;">
+                    <h3 style="color: var(--secondary); margin-bottom: 10px;">${el.dataset.nama}</h3>
+                    <div style="text-align: left; margin-top: 20px;">
+                        <p><strong>Jabatan:</strong> ${el.closest('.org-card').querySelector('h4').textContent}</p>
+                        <p><strong>TTL:</strong> ${el.dataset.ttl}</p>
+                        <p><strong>Sosial Media:</strong> ${el.dataset.sosmed}</p>
+                    </div>
+                </div>
+            `;
+            
+            // Buat lightbox sederhana
+            const lightbox = document.createElement('div');
+            lightbox.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.9);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 99999;
+            `;
+            
+            lightbox.innerHTML = `
+                <div style="background: white; padding: 30px; border-radius: 10px; max-width: 400px; width: 90%; position: relative;">
+                    <button onclick="this.parentElement.parentElement.remove()" 
+                            style="position: absolute; top: 10px; right: 10px; background: var(--primary); color: white; border: none; width: 30px; height: 30px; border-radius: 50%; cursor: pointer;">×</button>
+                    ${content}
+                </div>
+            `;
+            
+            document.body.appendChild(lightbox);
+        }
+
+        // ===== DATA UNTUK PRESTASI =====
+        const galleries = {
+            gallery1: [
+                { src: 'https://files.catbox.moe/l8qpcn.jpg', alt: 'Penampilan' },
+                { src: '/images/logo.png', alt: 'Penampilan formasi kreatif' },
+                { src: '/images/logo.png', alt: 'Penampilan formasi kreatif' },
+                { src: '/images/logo.png', alt: 'Penampilan formasi kreatif' }
+            ],
+            gallery2: [
+                { src: '/images/logo.png', alt: 'Upacara 17 Agustus' },
+                { src: '/images/logo.png', alt: 'Tim pengibar bendera' }
+            ]
+        };
+
+        const prestasiData = {
+        	ppi: {
+                title: 'Pasukan Pengibar Bendera 2023 - PAGASKA',
+                mainImage: 'https://files.catbox.moe/73e6x8.jpg',
+                text: `
+                    <p><strong>Selamat & Sukses</strong></p><br>
+                    <p>Selamat & Sukses atas pencapaiannya dalam menjadi Pasukan Pengibar Bendera Kota Madiun Tahun 2023 tidaklah mudah. Reyhan, Yasir Isa, Renata memulai seleksi selama 5 bulan lamanya sebelum dinyatakan lolos sebagai pasukan pengibar bendera pusaka dengan intens & keras dari TNI AD dan juga Purna Paskibraka Kota Madiun.</p><br>
+                    
+                    <p><strong>Terimakasih Atas Keberhasilannya</strong></p>
+                    <p>Kepada:</p>
+                    <ul>
+                        <li>Reyhan</li>
+                        <li>Yasir Isa</li>
+                        <li>Renata</li>
+                    </ul><br>
+                    
+                    <p>Prestasi ini menjadi bukti bahwa kerja keras, kedisiplinan, dan kreativitas dapat membawa nama baik sekolah ke puncak prestasi.</p>
+                `,
+                gallery: [
+                    'https://files.catbox.moe/l8qpcn.jpg',
+                    '/images/logo.png',
+                    '/images/logo.png'
+                ]
+            },
+            prestasi1: {
+                title: 'Parade Senja Kota Madiun 2024 - Detail Lengkap',
+                mainImage: 'https://files.catbox.moe/73e6x8.jpg',
+                text: `
+                    <p><strong>Kisah Perjuangan Menuju Juara 1</strong></p>
+                    <p>Perjalanan menuju juara 1 LKBB Kota Madiun 2024 tidaklah mudah. Tim PAGASKA memulai persiapan sejak 3 bulan sebelum lomba dengan intensitas latihan 5 kali seminggu.</p>
+                    
+                    <p><strong>Strategi Kemenangan</strong></p>
+                    <p>Kunci kemenangan kami terletak pada:</p>
+                    <ul>
+                        <li>Formasi Kreatif Unik</li>
+                        <li>Presisi Gerakan</li>
+                        <li>Timing Sempurna</li>
+                        <li>Mental Juara</li>
+                    </ul>
+                    
+                    <p>Prestasi ini menjadi bukti bahwa kerja keras, kedisiplinan, dan kreativitas dapat membawa tim sekolah ke puncak prestasi.</p>
+                `,
+                gallery: [
+                    'https://files.catbox.moe/l8qpcn.jpg',
+                    '/images/logo.png',
+                    '/images/logo.png'
+                ]
+            },
+            prestasi2: {
+                title: 'Penurunan Bendera Kecamatan Dalung 2024 - Dokumentasi Lengkap',
+                mainImage: '/images/logo.png',
+                text: `
+                    <p><strong>Kehormatan bagi Sekolah dan Kecamatan</strong></p>
+                    <p>Terpilihnya 10 anggota PAGASKA untuk bertugas dalam upacara penurunan bendera di Kecamatan Dalung merupakan kepercayaan besar dari pemerintah kecamatan terhadap kualitas dan kedisiplinan tim kami.</p>
+                    
+                    <p><strong>Proses Seleksi Ketat</strong></p>
+                    <p>Sebelum terpilih, anggota harus melalui seleksi internal dan pelatihan khusus selama 2 minggu.</p>
+                    
+                    <p>Pengalaman ini tidak hanya menjadi kebanggaan bagi sekolah, tetapi juga membuktikan bahwa ekstrakurikuler Paskibra dapat berkontribusi langsung pada kegiatan kenegaraan di tingkat kecamatan.</p>
+                `,
+                gallery: [
+                    '/images/logo.png',
+                    '/images/logo.png'
+                ]
+            }
+        };
+
+        // ===== VARIABEL GALLERY =====
+        let currentGallery = '';
+        let currentImageIndex = 0;
+        let galleryImages = [];
+
+        // ===== FUNGSI GALLERY LIGHTBOX =====
+        function openGalleryLightbox(galleryId, index = 0) {
+            currentGallery = galleryId;
+            currentImageIndex = index;
+            galleryImages = galleries[galleryId];
+            
+            if (galleryImages && galleryImages.length > 0) {
+                const lightbox = document.getElementById('galleryLightbox');
+                const lightboxImage = document.getElementById('lightboxImage');
+                const currentIndexSpan = document.getElementById('currentIndex');
+                const totalImagesSpan = document.getElementById('totalImages');
+                
+                lightboxImage.src = galleryImages[currentImageIndex].src;
+                lightboxImage.alt = galleryImages[currentImageIndex].alt;
+                currentIndexSpan.textContent = currentImageIndex + 1;
+                totalImagesSpan.textContent = galleryImages.length;
+                
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeGalleryLightbox() {
+            document.getElementById('galleryLightbox').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function prevImage() {
+            if (currentImageIndex > 0) {
+                currentImageIndex--;
+            } else {
+                currentImageIndex = galleryImages.length - 1;
+            }
+            updateLightboxImage();
+        }
+
+        function nextImage() {
+            if (currentImageIndex < galleryImages.length - 1) {
+                currentImageIndex++;
+            } else {
+                currentImageIndex = 0;
+            }
+            updateLightboxImage();
+        }
+
+        function updateLightboxImage() {
+            const lightboxImage = document.getElementById('lightboxImage');
+            const currentIndexSpan = document.getElementById('currentIndex');
+            
+            lightboxImage.src = galleryImages[currentImageIndex].src;
+            lightboxImage.alt = galleryImages[currentImageIndex].alt;
+            currentIndexSpan.textContent = currentImageIndex + 1;
+        }
+
+        // ===== FUNGSI DETAIL LIGHTBOX =====
+        function openDetailLightbox(prestasiId) {
+            const data = prestasiData[prestasiId];
+            if (!data) return;
+            
+            document.getElementById('detailTitle').textContent = data.title;
+            document.getElementById('detailMainImage').src = data.mainImage;
+            document.getElementById('detailText').innerHTML = data.text;
+            
+            const galleryContainer = document.getElementById('detailGallery');
+            galleryContainer.innerHTML = '';
+            
+            data.gallery.forEach((src, index) => {
+                const img = document.createElement('img');
+                img.src = src;
+                img.alt = `Dokumentasi ${index + 1}`;
+                img.style.cursor = 'pointer';
+                img.addEventListener('click', () => {
+                    const tempGalleryId = `detail${prestasiId}`;
+                    const tempGallery = data.gallery.map((imgSrc, idx) => ({
+                        src: imgSrc,
+                        alt: `Dokumentasi ${idx + 1}`
+                    }));
+                    
+                    galleries[tempGalleryId] = tempGallery;
+                    openGalleryLightbox(tempGalleryId, index);
+                });
+                galleryContainer.appendChild(img);
+            });
+            
+            document.getElementById('detailLightbox').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDetailLightbox() {
+            document.getElementById('detailLightbox').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // ===== INISIALISASI EVENT LISTENER =====
+        document.addEventListener('DOMContentLoaded', function() {
+            // Event listener untuk gallery items
+            document.querySelectorAll('.gallery-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const galleryId = this.closest('.gallery-grid').id;
+                    const index = parseInt(this.getAttribute('data-index'));
+                    openGalleryLightbox(galleryId, index);
+                });
+            });
+            
+            // Event listener untuk keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                const galleryOpen = document.getElementById('galleryLightbox').classList.contains('active');
+                const detailOpen = document.getElementById('detailLightbox').classList.contains('active');
+                
+                if (galleryOpen) {
+                    if (e.key === 'ArrowLeft') prevImage();
+                    if (e.key === 'ArrowRight') nextImage();
+                    if (e.key === 'Escape') closeGalleryLightbox();
+                }
+                
+                if (detailOpen) {
+                    if (e.key === 'Escape') closeDetailLightbox();
+                }
+            });
+            
+            // Event listener untuk klik di luar lightbox
+            document.getElementById('galleryLightbox').addEventListener('click', function(e) {
+                if (e.target === this) closeGalleryLightbox();
+            });
+            
+            document.getElementById('detailLightbox').addEventListener('click', function(e) {
+                if (e.target === this) closeDetailLightbox();
+            });
+            
+            // Animasi untuk prestasi articles
+            const achievementObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            document.querySelectorAll('.achievement-article').forEach((article, index) => {
+                article.style.opacity = '0';
+                article.style.transform = 'translateY(20px)';
+                article.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                article.style.transitionDelay = `${index * 0.1}s`;
+                achievementObserver.observe(article);
+            });
+        });
+    </script>
+</body>
+</html>
